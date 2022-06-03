@@ -1,0 +1,60 @@
+GET http://localhost:3000/subject/
+
+###
+GET http://localhost:3000/subject/629373e48dd2c1decc8addba
+
+
+###
+POST http://localhost:3000/subject/
+Content-Type: application/json
+
+{
+    "name": "Foundations of Data Science",
+    "code": "UCS1625",
+    "elective": "PE2",
+    "department": "CSE"
+}
+
+###
+PATCH http://localhost:3000/subject/629373e48dd2c1decc8addba
+Content-Type: application/json
+
+{
+    "name": "Foundations of Data Science",
+    "elective": "PE2"
+}
+
+###
+GET http://localhost:3000/form
+
+###
+POST http://localhost:3000/studentUser/register
+Content-Type: application/json
+
+{
+    "name": "Alice",
+    "email": "alice@gmail.com",
+    "password": "alice",
+    "batch": "62938ce6cda643d3963cbb1b"
+}
+
+###
+POST http://localhost:3000/studentDashboard/future
+Content-Type: application/json
+
+{
+    "id":"62998c0058563cf9d672f6e8",
+    "registrationNumber":195001001
+}
+
+###
+POST http://localhost:3000/studentDashboard/future
+Content-Type: application/json
+
+{
+    "id":"6299a066182e04dbc9db282c",
+    "registrationNumber":193001004
+}
+
+###
+GET http://localhost:3000/studentDashboard
