@@ -4,9 +4,8 @@ const Form = require("../models/form");
 const StudentUser = require("../models/studentUser");
 const Response = require("../models/response");
 
-router.post("/future", async (req, res) => {
-  const id = req.body.id;
-  const registrationNumber = req.body.registrationNumber;
+router.get("/:id", async (req, res) => {
+  const id = req.params.id;
 
   try {
     let forms = await Form.find();
@@ -16,22 +15,58 @@ router.post("/future", async (req, res) => {
     );
 
     let responses = await Response.find({
-      registrationNumber: registrationNumber,
+      student: student._id.toString(),
     });
 
-    forms = forms.filter((form) => {
-      for (let i = 0; i < responses.length; i++) {
-        if (form._id === responses[i].form) return false;
-      }
-      return true;
+    // console.log("Student: ", student);
+    // console.log("Forms: ", forms);
+    // console.log("Responses: ", responses);
+    // console.log("start: ", Date.parse(forms[0].startTime));
+    // console.log("end  : ", Date.parse(forms[0].endTime));
+    // console.log("now  : ", Date.now());
+    // console.log(Date.parse(forms[0].startTime) < Date.now());
+    // console.log(Date.parse(forms[0].endTime) > Date.now());
+
+    let future = [];
+    let past = [];
+    let filled = [];
+
+    future = forms.filter((form) => {
+      return (
+        Date.parse(form.startTime) < Date.now() &&
+        Date.parse(form.endTime) > Date.now()
+      );
     });
 
-    res.json({ status: "ok", forms: forms });
+    past = forms.filter((form) => {
+      return Date.parse(form.endTime) < Date.now();
+    });
+
+    if (responses.length !== 0) {
+      filled = forms.filter((form) => {
+        for (let i = 0; i < responses.length; i++) {
+          if (form._id.toString() !== responses[i].form) return false;
+        }
+        return true;
+      });
+      past = past.filter((form) => {
+        for (let i = 0; i < filled.length; i++) {
+          if (form === filled[i]) return false;
+        }
+        return true;
+      });
+      future = future.filter((form) => {
+        for (let i = 0; i < filled.length; i++) {
+          if (form === filled[i]) return false;
+        }
+        return true;
+      });
+    }
+
+    res.json({ status: "ok", future: future, past: past, filled: filled });
   } catch (err) {
     res.status(404).json({ status: "error", message: err });
   }
 });
-
-// router.post("/past", async (req, res) => {});
 
 module.exports = router;

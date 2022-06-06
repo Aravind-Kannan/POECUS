@@ -12,6 +12,18 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:shorthand/:dept", async (req, res) => {
+  try {
+    const subjects = await Subject.find({
+      elective: req.params.shorthand,
+      department: req.params.dept,
+    });
+    res.json(subjects);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // Getting One
 router.get("/:id", getSubject, (req, res) => {
   res.json(res.subject);

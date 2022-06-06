@@ -1,5 +1,6 @@
 import axios from "axios";
 import React from "react";
+import { toast } from "react-toastify";
 import AdminNavigationBar from "./AdminNavigationBar";
 
 class Subject extends React.Component {
@@ -25,6 +26,7 @@ class Subject extends React.Component {
     await axios.post(`http://localhost:3000/subject/`, this.state.formValues);
 
     this.setState({ ...this.state, formValues: {} });
+    toast.success("Subject Added!", { theme: "colored" });
     this.refresh();
   };
 
@@ -38,6 +40,7 @@ class Subject extends React.Component {
     );
 
     console.log(this.state.formValues);
+    toast.success("Subject Edited!", { theme: "colored" });
     this.refresh();
   };
 
@@ -49,6 +52,7 @@ class Subject extends React.Component {
   handleDelete = async (e, id) => {
     this.setState({ ...this.state, loading: true });
     await axios.delete(`http://localhost:3000/subject/${id}`);
+    toast.success("Subject Deleted!", { theme: "colored" });
     this.refresh();
   };
 

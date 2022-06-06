@@ -9,6 +9,8 @@ import StudentDashboard from "./pages/StudentDashboard";
 import Batch from "./pages/Batch";
 import Subject from "./pages/Subject";
 import Form from "./pages/Form";
+import Responses from "./pages/Responses";
+import Response from "./pages/Response";
 import { ToastContainer } from "react-toastify";
 
 const App = () => {
@@ -23,6 +25,8 @@ const App = () => {
         <Route path="/batch" element={<Batch />} />
         <Route path="/subject" element={<Subject />} />
         <Route path="/form" element={<Form />} />
+        <Route path="/responses" element={<Responses />} />
+        <Route path="/response/:formid" element={<Response />} />
       </Routes>
       <ToastContainer />
     </BrowserRouter>

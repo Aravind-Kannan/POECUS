@@ -1,15 +1,11 @@
 const mongoose = require("mongoose");
 
 const responseSchema = new mongoose.Schema({
-  registrationNumber: {
-    type: Number,
-    required: true,
-  },
-  form: {
+  student: {
     type: String,
     required: true,
   },
-  batch: {
+  form: {
     type: String,
     required: true,
   },
@@ -24,6 +20,12 @@ const responseSchema = new mongoose.Schema({
   priority3: {
     type: String,
     required: true,
+  },
+  allocated: {
+    type: String,
+  },
+  created: {
+    type: Number,
   },
 });
 

@@ -46,7 +46,7 @@ router.get("/", async (req, res) => {
   try {
     const decoded = jwt.verify(token, "secret123");
     const email = decoded.email;
-    const user = await user.findOne({ email: email });
+    const user = await StudentUser.findOne({ email: email });
 
     return res.json({ status: "ok", user: user });
   } catch (err) {
@@ -54,5 +54,23 @@ router.get("/", async (req, res) => {
     res.status(400).json({ status: "error", error: "invalid token" });
   }
 });
+
+router.get("/:id", getStudent, async (req, res) => {
+  res.json(res.student);
+});
+
+// Custom Middleware
+async function getStudent(req, res, next) {
+  let student;
+  try {
+    student = await StudentUser.findById(req.params.id);
+    if (student == null)
+      return res.status(404).json({ message: "Cannot find student" });
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+  res.student = student;
+  next();
+}
 
 module.exports = router;

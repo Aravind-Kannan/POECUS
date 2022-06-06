@@ -29,7 +29,7 @@ class Batch extends React.Component {
 
     res = await axios.get("http://localhost:3000/batch");
     this.setState({ ...this.state, data: res.data, loading: false });
-    toast.info("Batch Added!", { theme: "colored" });
+    toast.success("Batch Added!", { theme: "colored" });
   };
 
   handleEditSave = async (e) => {
@@ -45,6 +45,7 @@ class Batch extends React.Component {
 
     res = await axios.get("http://localhost:3000/batch");
     this.setState({ ...this.state, data: res.data, loading: false });
+    toast.success("Batch Edited!", { theme: "colored" });
   };
 
   handleEditClick = async (e, id) => {
@@ -57,7 +58,7 @@ class Batch extends React.Component {
     let res = await axios.delete(`http://localhost:3000/batch/${id}`);
     res = await axios.get("http://localhost:3000/batch");
     this.setState({ ...this.state, data: res.data, loading: false });
-    toast.info("Batch Deleted!", { theme: "colored" });
+    toast.success("Batch Deleted!", { theme: "colored" });
   };
 
   async componentDidMount() {

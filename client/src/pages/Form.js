@@ -1,5 +1,6 @@
 import axios from "axios";
 import React from "react";
+import { toast } from "react-toastify";
 import AdminNavigationBar from "./AdminNavigationBar";
 
 class Form extends React.Component {
@@ -35,6 +36,7 @@ class Form extends React.Component {
 
     res = await axios.get("http://localhost:3000/form");
     this.setState({ ...this.state, data: res.data, loading: false });
+    toast.success("Batch Added!", { theme: "colored" });
   };
 
   handleEditSave = async (e) => {
@@ -50,6 +52,7 @@ class Form extends React.Component {
 
     res = await axios.get("http://localhost:3000/form");
     this.setState({ ...this.state, data: res.data, loading: false });
+    toast.success("Batch Edited!", { theme: "colored" });
   };
 
   handleEditClick = async (e, id) => {
@@ -62,22 +65,13 @@ class Form extends React.Component {
     let res = await axios.delete(`http://localhost:3000/form/${id}`);
     res = await axios.get("http://localhost:3000/form");
     this.setState({ ...this.state, data: res.data, loading: false });
+    toast.success("Batch Deleted!", { theme: "colored" });
   };
 
   async componentDidMount() {
     const res = await axios.get("http://localhost:3000/form");
     const batches = await axios.get("http://localhost:3000/batch");
     const electives = await axios.get("http://localhost:3000/elective");
-
-    // for (let i = 0; i < res.data.length; i++) {
-    //   let id = res.data[i].id;
-    //   for (let j = 0; j < batches.data.length; j++) {
-    //     if (batches.data[j].id === id) {
-    //       const batch = this.state.batches[j];
-    //       res.data[i].batch = batch;
-    //     }
-    //   }
-    // }
 
     this.setState({
       ...this.state,
@@ -110,7 +104,7 @@ class Form extends React.Component {
             <h1 className="text-black font-bold text-3xl">
               {this.state.add === false ? "Edit" : "Add new"} form
             </h1>
-
+            {/* {JSON.stringify(this.state.formValues.batch)} */}
             <label className="font-semibold">Batch</label>
             <select
               name="batch"
@@ -205,7 +199,7 @@ class Form extends React.Component {
           </form>
         </div>
         <div className="pl-10 col-span-2 m-10 overflow-y-auto">
-          <h2 className="text-3xl font-bold my-6">Subject</h2>
+          <h2 className="text-3xl font-bold my-6">Form</h2>
           <div className="grid gap-4">
             {this.state.data.map((form) => {
               return (

@@ -17,6 +17,10 @@ const formSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  allocated: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Form", formSchema);

@@ -36,6 +36,9 @@ app.use("/elective", electiveRouter);
 const formRouter = require("./routes/forms");
 app.use("/form", formRouter);
 
+const responseRouter = require("./routes/response");
+app.use("/response", responseRouter);
+
 const studentDashboardRouter = require("./routes/studentDashboard");
 app.use("/studentDashboard", studentDashboardRouter);
 

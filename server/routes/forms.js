@@ -24,6 +24,7 @@ router.post("/", async (req, res) => {
     batch: req.body.batch,
     startTime: req.body.startTime,
     endTime: req.body.endTime,
+    allocated: "false",
   });
   try {
     const newForm = await form.save();
@@ -46,6 +47,9 @@ router.patch("/:id", getForm, async (req, res) => {
   }
   if (req.body.batch != null) {
     res.form.batch = req.body.batch;
+  }
+  if (req.body.allocated != null) {
+    res.form.allocated = req.body.allocated;
   }
 
   try {
